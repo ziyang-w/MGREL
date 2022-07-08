@@ -1,0 +1,18 @@
+# python缓存文件都默认忽略
+*.pyc
+# data会在论文发表后上传到github
+data/*
+# data/clinicalfeatures_tfidf.mat
+# data/GeneFeatures.mat
+# data/genes_phenes.mat
+# data/edge_index.npy
+# data/feature_matrix.npy
+# data/label.npy
+
+# 由代码自动生成的数据可以不用上传
+log/*
+OpenNE/GeneDis/*
+OpenNE/results/*
+
+README.md
+

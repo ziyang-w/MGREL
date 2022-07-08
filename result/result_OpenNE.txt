@@ -1,0 +1,653 @@
+# gcn only used in attributed graph
+python -m openne --model gcn --local-dataset --root-dir  /home/wzy/Documents/Github/OpenNE/data/GeneDis --edgefile edges.txt --labelfile labels.txt
+
+python -m openne --model deepwalk --local-dataset --root-dir  /home/wzy/Documents/Github/OpenNE/data/GeneDis --edgefile edges.txt --labelfile labels.txt
+python -m openne --model deepwalk --local-dataset --root-dir  /home/wzy/Documents/Github/OpenNE/data/GeneDis --adjfile adj.adjlist --labelfile labels.txt
+
+
+
+
+===============================20220613result==================================Embedding dim 128==========================
+====== running deepwalk ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'deepwalk', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/DeepWalk
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Walk iteration:
+Run epoch 0
+Epoch 0 ends in 0.1877431869506836 seconds.
+Run epoch 1
+Epoch 1 ends in 0.17746901512145996 seconds.
+Run epoch 2
+Epoch 2 ends in 0.18349981307983398 seconds.
+Run epoch 3
+Epoch 3 ends in 0.17731070518493652 seconds.
+Run epoch 4
+Epoch 4 ends in 0.18488597869873047 seconds.
+Run epoch 5
+Epoch 5 ends in 0.38933873176574707 seconds.
+Run epoch 6
+Epoch 6 ends in 0.17883038520812988 seconds.
+Run epoch 7
+Epoch 7 ends in 0.19663763046264648 seconds.
+Run epoch 8
+Epoch 8 ends in 0.25124382972717285 seconds.
+Run epoch 9
+Epoch 9 ends in 0.17799663543701172 seconds.
+training Word2Vec model...
+Obtaining vectors...
+Time used = 18.118276119232178s
+Finished training. Time used = 20.23008632659912.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/DeepWalk/DeepWalk_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/DeepWalk/DeepWalk_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9041554097517046, 'macro': 0.8365981203190506, 'samples': 0.9041554097517046, 'weighted': 0.8990865855145608}
+
+====== running line ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'line', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/LINE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Pre-processing for non-uniform negative sampling!
+Pre-processing for non-uniform negative sampling!
+total iter: 40
+epoch 5: sum of loss: tensor(3395.2363, device='cuda:0', grad_fn=<AddBackward0>); time used = 380.2706079483032s
+epoch 10: sum of loss: tensor(3202.3501, device='cuda:0', grad_fn=<AddBackward0>); time used = 378.63074588775635s
+epoch 15: sum of loss: tensor(3118.9927, device='cuda:0', grad_fn=<AddBackward0>); time used = 375.6443552970886s
+epoch 20: sum of loss: tensor(3074.7437, device='cuda:0', grad_fn=<AddBackward0>); time used = 384.10706543922424s
+epoch 25: sum of loss: tensor(3050.8740, device='cuda:0', grad_fn=<AddBackward0>); time used = 380.0009231567383s
+epoch 30: sum of loss: tensor(3037.9565, device='cuda:0', grad_fn=<AddBackward0>); time used = 391.0971190929413s
+epoch 35: sum of loss: tensor(3030.1338, device='cuda:0', grad_fn=<AddBackward0>); time used = 392.7447946071625s
+epoch 40: sum of loss: tensor(3023.3552, device='cuda:0', grad_fn=<AddBackward0>); time used = 395.1299204826355s
+Finished training. Time used = 3132.322276353836.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/LINE/LINE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/LINE/LINE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9288562974398559, 'macro': 0.8812362570073116, 'samples': 0.9288562974398559, 'weighted': 0.9253442952706129}
+
+====== running node2vec ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'node2vec', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/Node2vec
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Preprocess transition probs...
+Walk iteration:
+Run epoch 0
+Epoch 0 ends in 0.28055429458618164 seconds.
+Run epoch 1
+Epoch 1 ends in 0.2568821907043457 seconds.
+Run epoch 2
+Epoch 2 ends in 0.2532176971435547 seconds.
+Run epoch 3
+Epoch 3 ends in 0.2514042854309082 seconds.
+Run epoch 4
+Epoch 4 ends in 0.2578439712524414 seconds.
+Run epoch 5
+Epoch 5 ends in 0.2545483112335205 seconds.
+Run epoch 6
+Epoch 6 ends in 0.2504768371582031 seconds.
+Run epoch 7
+Epoch 7 ends in 0.2494490146636963 seconds.
+Run epoch 8
+Epoch 8 ends in 0.25665283203125 seconds.
+Run epoch 9
+Epoch 9 ends in 0.2509725093841553 seconds.
+training Word2Vec model...
+Obtaining vectors...
+Time used = 5.440646409988403s
+Finished training. Time used = 146.1491436958313.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/Node2vec/Node2vec_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/Node2vec/Node2vec_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.8984947896565033, 'macro': 0.8262605141704311, 'samples': 0.8984947896565033, 'weighted': 0.8917354370621363}
+
+====== running grarep ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'grarep', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/GraRep
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+/home/wzy/Documents/Github/OpenNE/src/openne/dataloaders/graph.py:105: RuntimeWarning: invalid value encountered in true_divide
+  A = A / A.sum(scaled, keepdims=True)
+kstep = 0
+kstep = 1
+kstep = 2
+kstep = 3
+Time used = 47.65503191947937s
+Finished training. Time used = 47.67821764945984.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/GraRep/GraRep_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/GraRep/GraRep_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.7939019683519877, 'macro': 0.44255593803786575, 'samples': 0.7939019683519877, 'weighted': 0.7026920606282439}
+
+====== running tadw ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'tadw', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+Traceback (most recent call last):
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/__main__.py", line 239, in <module>
+    main(parse_args())
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/__main__.py", line 223, in main
+    task.check(Model, Graph)  # check parameters
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/tasks/unsupervised_node_classification.py", line 15, in check
+    self.kwargs = modelclass.check(datasetclass, **self.train_kwargs())
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/models/models.py", line 93, in check
+    cls.check_graphtype(graphtype, **new_kwargs)
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/models/tadw.py", line 39, in check_graphtype
+    raise TypeError("TADW only accepts attributed graphs.")
+TypeError: TADW only accepts attributed graphs.
+
+====== running lap ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'lap', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/LaplacianEigenmaps
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+/home/wzy/Documents/Github/OpenNE/src/openne/models/lap.py:31: UserWarning: torch.symeig is deprecated in favor of torch.linalg.eigh and will be removed in a future PyTorch release.
+The default behavior has changed from using the upper triangular portion of the matrix by default to using the lower triangular portion.
+L, _ = torch.symeig(A, upper=upper)
+should be replaced with
+L = torch.linalg.eigvalsh(A, UPLO='U' if upper else 'L')
+and
+L, V = torch.symeig(A, eigenvectors=True)
+should be replaced with
+L, V = torch.linalg.eigh(A, UPLO='U' if upper else 'L') (Triggered internally at  ../aten/src/ATen/native/BatchLinearAlgebra.cpp:2524.)
+  w, vec = torch.symeig(lap_mat, eigenvectors=True)
+Traceback (most recent call last):
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/__main__.py", line 239, in <module>
+    main(parse_args())
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/__main__.py", line 228, in main
+    res = task.train(model, graph)  # train
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/tasks/tasks.py", line 35, in train
+    res = model(graph, **self.train_kwargs())
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/models/models.py", line 227, in forward
+    self.embeddings = self.train_model(graph, step=i, **kwargs)
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/models/lap.py", line 31, in train_model
+    w, vec = torch.symeig(lap_mat, eigenvectors=True)
+torch._C._LinAlgError: symeig_cpu: The algorithm failed to converge because the input matrix is ill-conditioned or has too many repeated eigenvalues (error code: 15545).
+
+====== running gf ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'gf', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/GraphFactorization
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+total iter: 130
+Traceback (most recent call last):
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/__main__.py", line 239, in <module>
+    main(parse_args())
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/__main__.py", line 228, in main
+    res = task.train(model, graph)  # train
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/tasks/tasks.py", line 35, in train
+    res = model(graph, **self.train_kwargs())
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/models/models.py", line 227, in forward
+    self.embeddings = self.train_model(graph, step=i, **kwargs)
+  File "/home/wzy/Documents/Github/OpenNE/src/openne/models/gf.py", line 37, in train_model
+    cost.backward()
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/site-packages/torch/_tensor.py", line 363, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/wzy/anaconda3/envs/openne/lib/python3.7/site-packages/torch/autograd/__init__.py", line 175, in backward
+    allow_unreachable=True, accumulate_grad=True)  # Calls into the C++ engine to run the backward pass
+RuntimeError: CUDA out of memory. Tried to allocate 922.00 MiB (GPU 0; 15.90 GiB total capacity; 2.72 GiB already allocated; 363.75 MiB free; 3.62 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+====== running hope ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'hope', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/HOPE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Time used = 126.67608404159546s
+Finished training. Time used = 126.70089292526245.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/HOPE/HOPE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/HOPE/HOPE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9233243278013636, 'macro': 0.8656441482931989, 'samples': 0.9233243278013636, 'weighted': 0.9169821128937311}
+
+====== running sdne ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'sdne', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 128, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/SDNE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+total iter: 200
+epoch 5: total loss: 215070.04688, l1 loss: 124.49199, l2 loss: 212580.15625; time used = 0.10488510131835938s
+epoch 10: total loss: 183446.48438, l1 loss: 866.21680, l2 loss: 166122.09375; time used = 0.025681257247924805s
+epoch 15: total loss: 159252.92188, l1 loss: 688.64868, l2 loss: 145479.90625; time used = 0.08678174018859863s
+epoch 20: total loss: 141890.71875, l1 loss: 1424.23901, l2 loss: 113405.89062; time used = 0.12588977813720703s
+epoch 25: total loss: 120299.79688, l1 loss: 868.92810, l2 loss: 102921.17969; time used = 0.03929781913757324s
+epoch 30: total loss: 128602.89062, l1 loss: 1092.75708, l2 loss: 106747.69531; time used = 0.05020499229431152s
+epoch 35: total loss: 127526.60156, l1 loss: 993.31262, l2 loss: 107660.28125; time used = 0.12312507629394531s
+epoch 40: total loss: 102122.10938, l1 loss: 433.34949, l2 loss: 93455.04688; time used = 0.07991957664489746s
+epoch 45: total loss: 116475.92188, l1 loss: 902.96338, l2 loss: 98416.57812; time used = 0.027988433837890625s
+epoch 50: total loss: 121146.20312, l1 loss: 750.81232, l2 loss: 106129.88281; time used = 0.11723852157592773s
+epoch 55: total loss: 96162.37500, l1 loss: 550.87372, l2 loss: 85144.81250; time used = 0.1070709228515625s
+epoch 60: total loss: 93024.53125, l1 loss: 636.69305, l2 loss: 80290.57812; time used = 0.0276334285736084s
+epoch 65: total loss: 97088.92969, l1 loss: 606.56873, l2 loss: 84957.45312; time used = 0.0886228084564209s
+epoch 70: total loss: 101404.14062, l1 loss: 632.40143, l2 loss: 88756.00000; time used = 0.12347984313964844s
+epoch 75: total loss: 84334.68750, l1 loss: 529.43311, l2 loss: 73745.90625; time used = 0.0382232666015625s
+epoch 80: total loss: 83811.07812, l1 loss: 479.98038, l2 loss: 74211.34375; time used = 0.04958915710449219s
+epoch 85: total loss: 98107.07031, l1 loss: 541.01013, l2 loss: 87286.72656; time used = 0.12486433982849121s
+epoch 90: total loss: 98665.35938, l1 loss: 687.26678, l2 loss: 84919.87500; time used = 0.07538032531738281s
+epoch 95: total loss: 112297.58594, l1 loss: 1221.60815, l2 loss: 87865.27344; time used = 0.021822452545166016s
+epoch 100: total loss: 79606.96094, l1 loss: 626.67529, l2 loss: 67073.29688; time used = 0.021865367889404297s
+epoch 105: total loss: 78829.96875, l1 loss: 589.29242, l2 loss: 67043.93750; time used = 0.02180004119873047s
+epoch 110: total loss: 76490.07812, l1 loss: 509.79065, l2 loss: 66294.07812; time used = 0.023012161254882812s
+epoch 115: total loss: 83465.17969, l1 loss: 473.60458, l2 loss: 73992.89062; time used = 0.05019736289978027s
+epoch 120: total loss: 84832.15625, l1 loss: 640.80817, l2 loss: 72015.78906; time used = 0.12493634223937988s
+epoch 125: total loss: 92778.60156, l1 loss: 712.86414, l2 loss: 78521.10938; time used = 0.07662343978881836s
+epoch 130: total loss: 82800.12500, l1 loss: 584.97217, l2 loss: 71100.45312; time used = 0.02183842658996582s
+epoch 135: total loss: 72430.03906, l1 loss: 368.23172, l2 loss: 65065.17188; time used = 0.02192974090576172s
+epoch 140: total loss: 109777.08594, l1 loss: 1329.10669, l2 loss: 83194.71094; time used = 0.021780729293823242s
+epoch 145: total loss: 74032.66406, l1 loss: 380.69495, l2 loss: 66418.51562; time used = 0.021833181381225586s
+epoch 150: total loss: 78060.75000, l1 loss: 545.47516, l2 loss: 67150.98438; time used = 0.021892786026000977s
+epoch 155: total loss: 84603.20312, l1 loss: 644.23413, l2 loss: 71718.25000; time used = 0.025661468505859375s
+epoch 160: total loss: 95365.87500, l1 loss: 871.51312, l2 loss: 77935.32812; time used = 0.0539240837097168s
+epoch 165: total loss: 76763.28125, l1 loss: 620.91406, l2 loss: 64344.70312; time used = 0.054080963134765625s
+epoch 170: total loss: 69487.75781, l1 loss: 480.52667, l2 loss: 59876.91797; time used = 0.05400490760803223s
+epoch 175: total loss: 85448.98438, l1 loss: 748.31714, l2 loss: 70482.32031; time used = 0.054305076599121094s
+epoch 180: total loss: 96859.34375, l1 loss: 977.39307, l2 loss: 77311.15625; time used = 0.05399060249328613s
+epoch 185: total loss: 73881.27344, l1 loss: 585.99078, l2 loss: 62161.12500; time used = 0.054464101791381836s
+epoch 190: total loss: 73409.44531, l1 loss: 634.29034, l2 loss: 60723.28125; time used = 0.05397176742553711s
+epoch 195: total loss: 77592.93750, l1 loss: 705.09595, l2 loss: 63490.65234; time used = 0.05446767807006836s
+epoch 200: total loss: 76343.35938, l1 loss: 565.68262, l2 loss: 65029.32812; time used = 0.054345130920410156s
+Finished training. Time used = 10.890350580215454.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/SDNE/SDNE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/SDNE/SDNE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9213945709507269, 'macro': 0.8590319284332745, 'samples': 0.9213945709507269, 'weighted': 0.914772309685334}
+
+
+
+===============================20220613result==================================Embedding dim 64==========================
+====== running deepwalk ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'deepwalk', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/DeepWalk
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Walk iteration:
+Run epoch 0
+Epoch 0 ends in 0.19050049781799316 seconds.
+Run epoch 1
+Epoch 1 ends in 0.17945647239685059 seconds.
+Run epoch 2
+Epoch 2 ends in 0.1694931983947754 seconds.
+Run epoch 3
+Epoch 3 ends in 0.1691446304321289 seconds.
+Run epoch 4
+Epoch 4 ends in 0.17992758750915527 seconds.
+Run epoch 5
+Epoch 5 ends in 0.3599250316619873 seconds.
+Run epoch 6
+Epoch 6 ends in 0.16644501686096191 seconds.
+Run epoch 7
+Epoch 7 ends in 0.16655993461608887 seconds.
+Run epoch 8
+Epoch 8 ends in 0.17350053787231445 seconds.
+Run epoch 9
+Epoch 9 ends in 0.16844654083251953 seconds.
+training Word2Vec model...
+Obtaining vectors...
+Time used = 13.951981782913208s
+Finished training. Time used = 15.880514144897461.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/DeepWalk/DeepWalk_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/DeepWalk/DeepWalk_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.8972082850894121, 'macro': 0.8258326036661818, 'samples': 0.8972082850894121, 'weighted': 0.8908252106856064}
+====== running line ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'line', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/LINE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Pre-processing for non-uniform negative sampling!
+Pre-processing for non-uniform negative sampling!
+total iter: 40
+epoch 5: sum of loss: tensor(3517.9983, device='cuda:0', grad_fn=<AddBackward0>); time used = 94.10901379585266s
+epoch 10: sum of loss: tensor(3302.4202, device='cuda:0', grad_fn=<AddBackward0>); time used = 93.16875910758972s
+epoch 15: sum of loss: tensor(3219.2493, device='cuda:0', grad_fn=<AddBackward0>); time used = 94.81350231170654s
+epoch 20: sum of loss: tensor(3174.4976, device='cuda:0', grad_fn=<AddBackward0>); time used = 87.45892119407654s
+epoch 25: sum of loss: tensor(3150.6309, device='cuda:0', grad_fn=<AddBackward0>); time used = 91.04258227348328s
+epoch 30: sum of loss: tensor(3136.2651, device='cuda:0', grad_fn=<AddBackward0>); time used = 93.48706650733948s
+epoch 35: sum of loss: tensor(3125.7207, device='cuda:0', grad_fn=<AddBackward0>); time used = 92.24806237220764s
+epoch 40: sum of loss: tensor(3119.0100, device='cuda:0', grad_fn=<AddBackward0>); time used = 92.17470335960388s
+Finished training. Time used = 789.5488159656525.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/LINE/LINE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/LINE/LINE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9186929113598353, 'macro': 0.8632631211886528, 'samples': 0.9186929113598353, 'weighted': 0.9141904309296847}
+====== running node2vec ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'node2vec', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/Node2vec
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Preprocess transition probs...
+Walk iteration:
+Run epoch 0
+Epoch 0 ends in 0.25376319885253906 seconds.
+Run epoch 1
+Epoch 1 ends in 0.23030972480773926 seconds.
+Run epoch 2
+Epoch 2 ends in 0.22322297096252441 seconds.
+Run epoch 3
+Epoch 3 ends in 0.22597312927246094 seconds.
+Run epoch 4
+Epoch 4 ends in 0.22159290313720703 seconds.
+Run epoch 5
+Epoch 5 ends in 0.22203707695007324 seconds.
+Run epoch 6
+Epoch 6 ends in 0.21965527534484863 seconds.
+Run epoch 7
+Epoch 7 ends in 0.21673059463500977 seconds.
+Run epoch 8
+Epoch 8 ends in 0.21872615814208984 seconds.
+Run epoch 9
+Epoch 9 ends in 0.21770954132080078 seconds.
+training Word2Vec model...
+Obtaining vectors...
+Time used = 4.581928730010986s
+Finished training. Time used = 130.6724545955658.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/Node2vec/Node2vec_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/Node2vec/Node2vec_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.8984947896565033, 'macro': 0.828299764809002, 'samples': 0.8984947896565033, 'weighted': 0.8920402370699221}
+====== running grarep ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'grarep', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/GraRep
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+/home/wzy/Documents/Github/OpenNE/src/openne/dataloaders/graph.py:105: RuntimeWarning: invalid value encountered in true_divide
+  A = A / A.sum(scaled, keepdims=True)
+kstep = 0
+kstep = 1
+kstep = 2
+kstep = 3
+Time used = 29.235875606536865s
+Finished training. Time used = 29.259055852890015.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/GraRep/GraRep_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/GraRep/GraRep_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.7954457738324971, 'macro': 0.4430352536543422, 'samples': 0.7954457738324971, 'weighted': 0.7048210403563098}
+====== running hope ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'hope', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/HOPE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Time used = 83.69509625434875s
+Finished training. Time used = 83.73462414741516.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/HOPE/HOPE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/HOPE/HOPE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9089154766499421, 'macro': 0.8365018003779011, 'samples': 0.9089154766499421, 'weighted': 0.9009083970389605}
+====== running sdne ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'sdne', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/SDNE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+total iter: 200
+epoch 5: total loss: 190229.17188, l1 loss: 141.02692, l2 loss: 187408.59375; time used = 0.029441356658935547s
+epoch 10: total loss: 243271.79688, l1 loss: 1700.37842, l2 loss: 209264.18750; time used = 0.022690296173095703s
+epoch 15: total loss: 149716.76562, l1 loss: 481.22607, l2 loss: 140092.20312; time used = 0.02270650863647461s
+epoch 20: total loss: 136607.10938, l1 loss: 541.14911, l2 loss: 125784.07812; time used = 0.022731781005859375s
+epoch 25: total loss: 137720.87500, l1 loss: 1462.26611, l2 loss: 108475.50781; time used = 0.02273702621459961s
+epoch 30: total loss: 155517.43750, l1 loss: 1254.98645, l2 loss: 130417.64844; time used = 0.022708892822265625s
+epoch 35: total loss: 93136.50781, l1 loss: 508.19275, l2 loss: 82972.57812; time used = 0.022742271423339844s
+epoch 40: total loss: 119670.28906, l1 loss: 753.20380, l2 loss: 104606.14062; time used = 0.022494792938232422s
+epoch 45: total loss: 113070.50781, l1 loss: 681.18243, l2 loss: 99446.78125; time used = 0.021966218948364258s
+epoch 50: total loss: 106336.14062, l1 loss: 616.94128, l2 loss: 93997.23438; time used = 0.021930694580078125s
+epoch 55: total loss: 93821.32812, l1 loss: 414.19318, l2 loss: 85537.37500; time used = 0.021944284439086914s
+epoch 60: total loss: 122731.21094, l1 loss: 740.13593, l2 loss: 107928.39062; time used = 0.021961212158203125s
+epoch 65: total loss: 115475.95312, l1 loss: 802.08850, l2 loss: 99434.07812; time used = 0.021886825561523438s
+epoch 70: total loss: 103778.22656, l1 loss: 648.79187, l2 loss: 90802.27344; time used = 0.021854877471923828s
+epoch 75: total loss: 104228.32031, l1 loss: 708.47375, l2 loss: 90058.71094; time used = 0.021871328353881836s
+epoch 80: total loss: 95610.90625, l1 loss: 411.10059, l2 loss: 87388.75000; time used = 0.021859407424926758s
+epoch 85: total loss: 103104.29688, l1 loss: 609.22937, l2 loss: 90919.56250; time used = 0.02186441421508789s
+epoch 90: total loss: 99983.35156, l1 loss: 713.07251, l2 loss: 85721.73438; time used = 0.021904468536376953s
+epoch 95: total loss: 101315.17188, l1 loss: 982.56714, l2 loss: 81663.64844; time used = 0.021904468536376953s
+epoch 100: total loss: 97293.97656, l1 loss: 739.75153, l2 loss: 82498.75781; time used = 0.021836280822753906s
+epoch 105: total loss: 85677.11719, l1 loss: 535.29553, l2 loss: 74971.01562; time used = 0.021750926971435547s
+epoch 110: total loss: 112209.68750, l1 loss: 733.05396, l2 loss: 97548.39844; time used = 0.02184915542602539s
+epoch 115: total loss: 77755.97656, l1 loss: 391.12994, l2 loss: 69933.15625; time used = 0.021831035614013672s
+epoch 120: total loss: 86233.42188, l1 loss: 591.99780, l2 loss: 74393.23438; time used = 0.021800518035888672s
+epoch 125: total loss: 81330.10156, l1 loss: 477.69800, l2 loss: 71775.89062; time used = 0.02178812026977539s
+epoch 130: total loss: 107467.28906, l1 loss: 1144.39929, l2 loss: 84579.04688; time used = 0.021790504455566406s
+epoch 135: total loss: 81909.93750, l1 loss: 571.26868, l2 loss: 70484.29688; time used = 0.021758079528808594s
+epoch 140: total loss: 85040.34375, l1 loss: 537.22418, l2 loss: 74295.57031; time used = 0.02173614501953125s
+epoch 145: total loss: 82461.40625, l1 loss: 688.36609, l2 loss: 68693.78906; time used = 0.021723031997680664s
+epoch 150: total loss: 82536.16406, l1 loss: 587.13220, l2 loss: 70793.21875; time used = 0.021796464920043945s
+epoch 155: total loss: 72995.26562, l1 loss: 395.16257, l2 loss: 65091.68750; time used = 0.021799325942993164s
+epoch 160: total loss: 88228.19531, l1 loss: 902.74744, l2 loss: 70172.90625; time used = 0.021803855895996094s
+epoch 165: total loss: 76863.70312, l1 loss: 434.76828, l2 loss: 68167.99219; time used = 0.021785259246826172s
+epoch 170: total loss: 78563.47656, l1 loss: 630.09827, l2 loss: 65961.14844; time used = 0.021798133850097656s
+epoch 175: total loss: 74963.06250, l1 loss: 566.51318, l2 loss: 63632.42188; time used = 0.021811246871948242s
+epoch 180: total loss: 81020.73438, l1 loss: 548.38861, l2 loss: 70052.57812; time used = 0.0218050479888916s
+epoch 185: total loss: 81862.53125, l1 loss: 728.00824, l2 loss: 67301.96875; time used = 0.021807432174682617s
+epoch 190: total loss: 56910.65625, l1 loss: 309.83667, l2 loss: 50713.51172; time used = 0.021778345108032227s
+epoch 195: total loss: 74151.79688, l1 loss: 611.00781, l2 loss: 61931.21875; time used = 0.021814584732055664s
+epoch 200: total loss: 56282.22656, l1 loss: 362.74667, l2 loss: 49026.85938; time used = 0.021804332733154297s
+Finished training. Time used = 7.89167857170105.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/SDNE/SDNE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/SDNE/SDNE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9179210086195806, 'macro': 0.8563457994193087, 'samples': 0.9179210086195806, 'weighted': 0.9108548026512256}
+
+
+===============================20220101result==================================Embedding dim 64, NEW Data==========================
+====== running deepwalk ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'deepwalk', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/DeepWalk
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Walk iteration:
+Run epoch 0
+Epoch 0 ends in 0.17465567588806152 seconds.
+Run epoch 1
+Epoch 1 ends in 0.1684730052947998 seconds.
+Run epoch 2
+Epoch 2 ends in 0.169158935546875 seconds.
+Run epoch 3
+Epoch 3 ends in 0.16960477828979492 seconds.
+Run epoch 4
+Epoch 4 ends in 0.16959214210510254 seconds.
+Run epoch 5
+Epoch 5 ends in 0.31473731994628906 seconds.
+Run epoch 6
+Epoch 6 ends in 0.16861701011657715 seconds.
+Run epoch 7
+Epoch 7 ends in 0.1672651767730713 seconds.
+Run epoch 8
+Epoch 8 ends in 0.1684410572052002 seconds.
+Run epoch 9
+Epoch 9 ends in 0.17236757278442383 seconds.
+training Word2Vec model...
+Obtaining vectors...
+Time used = 17.067938089370728s
+Finished training. Time used = 18.915787935256958.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/DeepWalk/DeepWalk_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/DeepWalk/DeepWalk_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.8824134825678631, 'macro': 0.803117247479842, 'samples': 0.8824134825678631, 'weighted': 0.8756942800000963}
+====== running line ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'line', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/LINE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Pre-processing for non-uniform negative sampling!
+Pre-processing for non-uniform negative sampling!
+total iter: 40
+epoch 5: sum of loss: tensor(3624.9839, device='cuda:0', grad_fn=<AddBackward0>); time used = 92.83537650108337s
+epoch 10: sum of loss: tensor(3399.7280, device='cuda:0', grad_fn=<AddBackward0>); time used = 87.97970199584961s
+epoch 15: sum of loss: tensor(3305.8235, device='cuda:0', grad_fn=<AddBackward0>); time used = 91.59154605865479s
+epoch 20: sum of loss: tensor(3261.3972, device='cuda:0', grad_fn=<AddBackward0>); time used = 88.33035922050476s
+epoch 25: sum of loss: tensor(3235.2983, device='cuda:0', grad_fn=<AddBackward0>); time used = 87.97037649154663s
+epoch 30: sum of loss: tensor(3219.7515, device='cuda:0', grad_fn=<AddBackward0>); time used = 88.19136476516724s
+epoch 35: sum of loss: tensor(3211.5476, device='cuda:0', grad_fn=<AddBackward0>); time used = 88.19776463508606s
+epoch 40: sum of loss: tensor(3203.4895, device='cuda:0', grad_fn=<AddBackward0>); time used = 87.65898323059082s
+Finished training. Time used = 770.5941269397736.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/LINE/LINE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/LINE/LINE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9294995497234015, 'macro': 0.8820854153005573, 'samples': 0.9294995497234015, 'weighted': 0.9270369775156011}
+====== running node2vec ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'node2vec', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/Node2vec
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Preprocess transition probs...
+Walk iteration:
+Run epoch 0
+Epoch 0 ends in 0.28882670402526855 seconds.
+Run epoch 1
+Epoch 1 ends in 0.2519114017486572 seconds.
+Run epoch 2
+Epoch 2 ends in 0.24640512466430664 seconds.
+Run epoch 3
+Epoch 3 ends in 0.24190998077392578 seconds.
+Run epoch 4
+Epoch 4 ends in 0.24118256568908691 seconds.
+Run epoch 5
+Epoch 5 ends in 0.23896265029907227 seconds.
+Run epoch 6
+Epoch 6 ends in 0.24017882347106934 seconds.
+Run epoch 7
+Epoch 7 ends in 0.24274969100952148 seconds.
+Run epoch 8
+Epoch 8 ends in 0.23717474937438965 seconds.
+Run epoch 9
+Epoch 9 ends in 2.514061689376831 seconds.
+training Word2Vec model...
+Obtaining vectors...
+Time used = 4.474356651306152s
+Finished training. Time used = 135.15254402160645.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/Node2vec/Node2vec_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/Node2vec/Node2vec_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.8925768686478837, 'macro': 0.815396281556739, 'samples': 0.8925768686478837, 'weighted': 0.8860504560904351}
+====== running grarep ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'grarep', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/GraRep
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+/home/wzy/Documents/Github/OpenNE/src/openne/dataloaders/graph.py:105: RuntimeWarning: invalid value encountered in true_divide
+  A = A / A.sum(scaled, keepdims=True)
+kstep = 0
+kstep = 1
+kstep = 2
+kstep = 3
+Time used = 26.178553342819214s
+Finished training. Time used = 26.203180074691772.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/GraRep/GraRep_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/GraRep/GraRep_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.7928727646983147, 'macro': 0.44223593570608494, 'samples': 0.7928727646983147, 'weighted': 0.7012736579844594}
+====== running hope ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'hope', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/HOPE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+Time used = 67.38204526901245s
+Finished training. Time used = 67.41935205459595.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/HOPE/HOPE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/HOPE/HOPE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9157339508555256, 'macro': 0.8479452328493596, 'samples': 0.9157339508555256, 'weighted': 0.9085371139342544}
+====== running sdne ======
+actual args: {'cpu': False, 'devices': [0], 'model': 'sdne', 'local_dataset': True, 'root_dir': '/home/wzy/Documents/Github/OpenNE/data/GeneDis', 'adjfile': 'adj.adjlist', 'labelfile': 'labels.txt', 'name': 'SelfDefined', 'weighted': False, 'directed': False, 'clf_ratio': 0.5, '_validate': False, '_no_validate': False, 'dim': 64, 'validation_interval': 5, 'debug_output_interval': 5, 'save': True, 'silent': False, 'sparse': False, 'kstep': 4, 'measurement': 'katz', 'table_size': 100000000.0, 'negative_ratio': 5, 'encoder_layer_list': [128], 'nu1': 1e-08, 'nu2': 0.0001, 'decay': False, 'pretrain': False, 'lamb': 0.4, 'learning_rate': 0.01, 'path_length': 80, 'num_paths': 10, 'p': 1.0, 'q': 1.0, 'window': 10, 'workers': 8}
+output path =  /home/wzy/Documents/Github/OpenNE/results/SDNE
+Loading SelfDefined Dataset from root dir: /home/wzy/Documents/Github/OpenNE/data/GeneDis
+Executing task UnsupervisedNodeClassification.
+Creating test set using 50.0% nodes as training set...finished
+Start training...
+total iter: 200
+epoch 5: total loss: 218377.46875, l1 loss: 126.11835, l2 loss: 215855.06250; time used = 0.03563427925109863s
+epoch 10: total loss: 165355.81250, l1 loss: 126.25280, l2 loss: 162830.70312; time used = 0.022589921951293945s
+epoch 15: total loss: 232442.95312, l1 loss: 2173.23584, l2 loss: 188978.18750; time used = 0.02259993553161621s
+epoch 20: total loss: 146882.39062, l1 loss: 417.21112, l2 loss: 138538.12500; time used = 0.02261805534362793s
+epoch 25: total loss: 165911.76562, l1 loss: 1660.40125, l2 loss: 132703.68750; time used = 0.022556304931640625s
+epoch 30: total loss: 109474.92188, l1 loss: 435.37256, l2 loss: 100767.41406; time used = 0.022283315658569336s
+epoch 35: total loss: 155340.23438, l1 loss: 1445.11304, l2 loss: 126437.91406; time used = 0.02176046371459961s
+epoch 40: total loss: 111645.20312, l1 loss: 595.18695, l2 loss: 99741.39062; time used = 0.0218508243560791s
+epoch 45: total loss: 123164.51562, l1 loss: 1243.85913, l2 loss: 98287.25000; time used = 0.021817445755004883s
+epoch 50: total loss: 131962.07812, l1 loss: 759.01038, l2 loss: 116781.78125; time used = 0.02183055877685547s
+epoch 55: total loss: 129987.33594, l1 loss: 865.72632, l2 loss: 112672.71875; time used = 0.0217587947845459s
+epoch 60: total loss: 91839.60156, l1 loss: 659.21625, l2 loss: 78655.17188; time used = 0.02215576171875s
+epoch 65: total loss: 92683.00781, l1 loss: 496.69403, l2 loss: 82749.02344; time used = 0.021755456924438477s
+epoch 70: total loss: 111810.44531, l1 loss: 641.77936, l2 loss: 98974.75000; time used = 0.021771669387817383s
+epoch 75: total loss: 91805.67188, l1 loss: 453.07373, l2 loss: 82744.07812; time used = 0.021700382232666016s
+epoch 80: total loss: 86682.96875, l1 loss: 422.35144, l2 loss: 78235.81250; time used = 0.021723270416259766s
+epoch 85: total loss: 103920.79688, l1 loss: 728.95081, l2 loss: 89341.64844; time used = 0.021663904190063477s
+epoch 90: total loss: 98683.69531, l1 loss: 626.64734, l2 loss: 86150.60156; time used = 0.02176070213317871s
+epoch 95: total loss: 116401.64844, l1 loss: 924.07874, l2 loss: 97919.92188; time used = 0.0216519832611084s
+epoch 100: total loss: 109422.37500, l1 loss: 949.85455, l2 loss: 90425.11719; time used = 0.021607160568237305s
+epoch 105: total loss: 89068.71094, l1 loss: 488.75674, l2 loss: 79293.40625; time used = 0.021645069122314453s
+epoch 110: total loss: 92315.97656, l1 loss: 497.88489, l2 loss: 82358.10156; time used = 0.02169060707092285s
+epoch 115: total loss: 117956.33594, l1 loss: 1018.76996, l2 loss: 97580.74219; time used = 0.021647930145263672s
+epoch 120: total loss: 128962.93750, l1 loss: 988.74762, l2 loss: 109187.78125; time used = 0.021595478057861328s
+epoch 125: total loss: 91698.53906, l1 loss: 798.82721, l2 loss: 75721.78125; time used = 0.021614551544189453s
+epoch 130: total loss: 85049.90625, l1 loss: 522.91699, l2 loss: 74591.34375; time used = 0.021633148193359375s
+epoch 135: total loss: 79869.54688, l1 loss: 527.47998, l2 loss: 69319.71094; time used = 0.02164459228515625s
+epoch 140: total loss: 100594.47656, l1 loss: 995.67334, l2 loss: 80680.76562; time used = 0.02162337303161621s
+epoch 145: total loss: 97951.43750, l1 loss: 844.98157, l2 loss: 81051.55469; time used = 0.021613121032714844s
+epoch 150: total loss: 94831.89844, l1 loss: 867.96429, l2 loss: 77472.35938; time used = 0.021633148193359375s
+epoch 155: total loss: 85770.50781, l1 loss: 698.50031, l2 loss: 71800.23438; time used = 0.021648168563842773s
+epoch 160: total loss: 95823.42969, l1 loss: 669.73462, l2 loss: 82428.45312; time used = 0.021652698516845703s
+epoch 165: total loss: 91029.41406, l1 loss: 671.08057, l2 loss: 77607.50781; time used = 0.021620750427246094s
+epoch 170: total loss: 81621.76562, l1 loss: 721.07861, l2 loss: 67199.89062; time used = 0.021607637405395508s
+epoch 175: total loss: 87278.34375, l1 loss: 854.87048, l2 loss: 70180.61719; time used = 0.021577835083007812s
+epoch 180: total loss: 76754.05469, l1 loss: 508.98895, l2 loss: 66573.94531; time used = 0.02165818214416504s
+epoch 185: total loss: 94820.41406, l1 loss: 925.08362, l2 loss: 76318.40625; time used = 0.021664857864379883s
+epoch 190: total loss: 68656.03906, l1 loss: 479.00415, l2 loss: 59075.61328; time used = 0.021674156188964844s
+epoch 195: total loss: 69383.73438, l1 loss: 375.60828, l2 loss: 61871.21484; time used = 0.021680355072021484s
+epoch 200: total loss: 70788.18750, l1 loss: 600.26910, l2 loss: 58782.44531; time used = 0.021614789962768555s
+Finished training. Time used = 8.253048658370972.
+Saving embeddings to /home/wzy/Documents/Github/OpenNE/results/SDNE/SDNE_embeddings.txt...
+Saving model to /home/wzy/Documents/Github/OpenNE/results/SDNE/SDNE_model.txt...
+Training classifier using 50.00% nodes...
+{'micro': 0.9189502122732536, 'macro': 0.8526037627082483, 'samples': 0.9189502122732536, 'weighted': 0.9119784281195387}
+
+

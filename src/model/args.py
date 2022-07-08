@@ -33,7 +33,6 @@ parser.add_argument('-bs', '--batch_size', default=512, type=int,
 #                     help='Early Stopping argument')
 
 # Model Arguments
-
 #TODO: Add more arguments for model
 parser.add_argument('-ah', '--ae_hidden', nargs='+', type=int, 
                     help='Set the AutoEncoder hidden layer. eg: 512 64')

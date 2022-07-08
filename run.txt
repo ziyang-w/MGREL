@@ -1,0 +1,11 @@
+# log/07-08/11_
+python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 1 -sk True -skae True -skopenne True
+# log/07-08/12_
+python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 2 -sk True -skae True -skopenne True
+# log/07-08/15_
+python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 3 -sk True -skae True -skopenne True
+
+
+
+python -m openne --model ${model} --local-dataset --root-dir  OpenNE/GeneDis --adjfile adj.adjlist --labelfile labels.txt --dim 64
+conda run -n openne -m openne --model deepwalk --local-dataset --root-dir  OpenNE/GeneDis --adjfile adj.adjlist --labelfile labels.txt --dim 64

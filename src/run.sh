@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # python src/model/load_data.py
 # python src/model/feature_extraction.py
 

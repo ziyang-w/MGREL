@@ -24,10 +24,11 @@ def load_data_from_mat(skip:bool=False,save:bool=True) -> torch.Tensor:
     num_disease = 3215
 
     if skip:
-        gene_feat = sp.load("data/gene_feat.npz")
-        dis_feat = sp.load("data/dis_feat.npz")
-        comb  = sp.load("data/comb.npz")
-    
+        gene_feat = sp.load_npz("data/gene_feat.npz")
+        dis_feat = sp.load_npz("data/dis_feat.npz")
+        comb  = sp.load_npz("data/comb.npz").todense()
+        label = np.load("data/label.npy")
+        print('skip loading data!!!')
     else:
         # gene interaction network
         gene_phenes_path = 'data/genes_phenes.mat'

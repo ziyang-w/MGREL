@@ -24,16 +24,17 @@ def main():
 
     gene_feat, dis_feat, comb, label = load_data.load_data_from_mat(skip=args.skip_load_data,save=True)
 
-    load_data.make_data_for_openne(comb,label)
 
     # OpenNE TODO: 将OpenNE的超参数放在args中
+    # OpenNE TODO: 实现OpenNE切换运行环境自动化运行
     if args.skip_openne:
         print('skip OpenNE!!!')
     else:
+        load_data.make_data_for_openne(comb,label)
         openneLog = os.path.join(args.logInfo['logPath'], '{}openne.log'.format(args.logInfo['hour']))
         print('=======running OpenNE========')
         print('this may take a while, and the log will be saved in {}'.format(openneLog))
-        os.system('sh OpenNE/src/run_openne.sh > {}'.format(openneLog))
+        os.system('bash OpenNE/src/run_openne.sh > {}'.format(openneLog))
         print('finished OpenNE!')
 
     if args.skip_ae:

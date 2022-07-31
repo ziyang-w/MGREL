@@ -140,7 +140,7 @@ def train_test_split_edges(data, val_ratio=0.1, test_ratio=0.1):
 
     return data
 
-
+##### new add into this file ######
 def plot_result_auc(args, label, predict, auc):
     """Plot the ROC curve for predictions.
     Parameters
@@ -191,13 +191,21 @@ def plot_result_aupr(args, label, predict, aupr):
     plt.savefig(os.path.join(args.saved_path, 'result_aupr.png'))
     plt.clf()
 
-def get_metrics_auc(real_score, predict_score):
-    AUC = roc_auc_score(real_score, predict_score)
-    AUPR = average_precision_score(real_score, predict_score)
-    return AUC, AUPR
 
+def set_seed(seed=0):
+    """Set random seed.
+    Parameters
+    ----------
+    seed : int
+        Random seed to use
+    """
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
 
-def get_metrics(real_score, predict_score):
+def PRF1(real_score:np.array, predict_score:np.array)->dict:
     """Calculate the performance metrics.
     Resource code is acquired from:
     Yu Z, Huang F, Zhao X et al.
@@ -206,8 +214,8 @@ def get_metrics(real_score, predict_score):
 
     Parameters
     ----------
-    real_score: true labels
-    predict_score: model predictions
+    real_score: true labels, ytest
+    predict_score: model predictions, yprob
 
     Return
     ---------
@@ -260,7 +268,17 @@ def get_metrics(real_score, predict_score):
     specificity = specificity_list[max_index]
     recall = recall_list[max_index]
     precision = precision_list[max_index]
-    return auc[0, 0], aupr[0, 0], accuracy, f1_score, precision, recall, specificity
+
+    cm = {'A':accuracy,
+    'P(PPV)':precision,
+    'R(Sen)(TPR)':recall,
+    'Spec(TNR)':specificity,
+    'F1':f1_score,
+    'AUC':auc[0, 0],
+    'AUPR':aupr[0, 0],
+    'YI':recall + specificity - 1,
+    'threshold':thresholds.T[max_index][0][0]}
+    return cm
 
 def set_seed(seed=0):
     """Set random seed.

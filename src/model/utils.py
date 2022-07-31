@@ -19,7 +19,7 @@ def set_seed(seed=42):
         torch.cuda.manual_seed(seed)
     return seed
 
-def make_logInfo(fileName:str, filePath:str) -> dict:
+def make_logInfo(fileName:str, filePath:str,savePath:str='') -> dict:
     '''
     description: 根据数据集fileName, 数据集路径filePath, 构造LogInfo字典
                  主要目的为了后续数据分析文件的保存
@@ -30,7 +30,10 @@ def make_logInfo(fileName:str, filePath:str) -> dict:
     from datetime import datetime
     startDate = datetime.now().strftime('%m-%d')
     hour = datetime.now().strftime('%H_')
-    logPath = os.path.join(filePath, 'log', fileName.split('.')[0], startDate)
+    if savePath!='':
+        logPath = os.path.join(filePath, 'log', fileName.split('.')[0], savePath)
+    else:
+        logPath = os.path.join(filePath, 'log', fileName.split('.')[0], startDate)
 
     if not os.path.exists(logPath):
         os.makedirs(logPath)
@@ -45,7 +48,7 @@ def make_logInfo(fileName:str, filePath:str) -> dict:
                'filePath': filePath}
     return logInfo
 
-# TODO : save_pickle
+
 def save_pickle(variable:any, logInfo:dict, suffix:str, fileName=False):
     '''
     description:  将结果保存到对应的log目录下, 
@@ -91,7 +94,6 @@ def save_csv(df:pd.DataFrame, logInfo:dict, suffix:str, fileName=False):
 
 #==========wzyFunc.modelEvaluation==========
 def PRF1(real_score:np.array, predict_score:np.array)->dict:
-    # TODO:TEST
     """Calculate the performance metrics.
     Resource code is acquired from:
     Yu Z, Huang F, Zhao X et al.
@@ -155,15 +157,16 @@ def PRF1(real_score:np.array, predict_score:np.array)->dict:
     recall = recall_list[max_index]
     precision = precision_list[max_index]
 
-    cm = {'A':accuracy,
-    'P(PPV)':precision,
-    'R(Sen)(TPR)':recall,
-    'Spec(TNR)':specificity,
-    'F1':f1_score,
+    cm = {
     'AUC':auc[0, 0],
     'AUPR':aupr[0, 0],
+    'F1':f1_score,
+    'A':accuracy,
+    'R(Sen)(TPR)':recall,
+    'Spec(TNR)':specificity,
+    'P(PPV)':precision,
     'YI':recall + specificity - 1,
-    'threshold':thresholds.T[max_index][0][0]}
+    'threshold':thresholds.T[max_index][0][0].item()}
     return cm
 
 

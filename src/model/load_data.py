@@ -1,4 +1,3 @@
-from unittest import skip
 import h5py
 import torch
 import numpy as np
@@ -26,7 +25,7 @@ def load_data_from_mat(skip:bool=False,save:bool=True) -> torch.Tensor:
     if skip:
         gene_feat = sp.load_npz("data/gene_feat.npz")
         dis_feat = sp.load_npz("data/dis_feat.npz")
-        comb  = sp.load_npz("data/comb.npz").todense()
+        comb  = sp.load_npz("data/comb.npz").toarray()
         label = np.load("data/label.npy")
         print('skip loading data!!!')
     else:
@@ -176,13 +175,18 @@ def load_data_from_mat(skip:bool=False,save:bool=True) -> torch.Tensor:
 
     return gene_feat, dis_feat, comb, label
 
+
 def make_data_for_openne(comb:np.array,label:np.array)->None:
     '''
     comb  <- load_data_from_mat()
     label <- load_data_from_mat()
     '''
     # using networkx to make adjlist files -> OpenNE
+    # make gd_matrix = 0 to avoid data leak
+    comb[:12331,12331:] = 0
+    comb[12331:,:12331] = 0
     G = nx.from_numpy_matrix(comb)
+
     nx.write_adjlist(G, 'OpenNE/GeneDis/adj.adjlist')
     print('adjlist file has been made into: OpenNE/GeneDis/adj.adjlist')
             
@@ -191,3 +195,54 @@ def make_data_for_openne(comb:np.array,label:np.array)->None:
         for i,r in enumerate(label):
             f.write('{} {}\n'.format(i,r.item()))
     print('labels.txt file has been made into: OpenNE/GeneDis/labels.txt')
+
+
+# TODO: 随机选择20%的数据作为模型发现新基因的能力的样本集，20%不参与训练和验证，直接从全集中抽取，并进行掩盖
+def load_findNew(maskType:str='gene')->np.array:
+    '''
+    return: maskGeneIndex, comb, testSet
+    '''
+    import pandas as pd
+    gdMatrix = sp.load_npz("data/gd.npz").toarray().astype(int)
+
+    if maskType == 'gene':
+        np.random.seed(0)
+        testGeneIndex = np.random.choice(12331,int(0.2*12331),replace=False) # replace=False,表示采样不重复
+        np.save("data/{}_findNew_mask".format(maskType),testGeneIndex)
+        testSet = gdMatrix[testGeneIndex,:]
+        gdMatrix[testGeneIndex,:] = 0
+        # 构造一个字典用于对齐两次nonezero的索引
+        maskDict = {i:k for i,k in enumerate(testGeneIndex)}
+
+        test_pos_index = np.where(testSet == 1) # test row index = maskGeneIndex, col index = gene index
+        test_pos_index = np.vstack((pd.Series(test_pos_index[0]).map(maskDict).to_numpy(),test_pos_index[1]))
+        test_neg_index = np.where(testSet == 0)
+        test_neg_index = np.vstack((pd.Series(test_neg_index[0]).map(maskDict).to_numpy(),test_neg_index[1]))
+        
+    elif maskType == 'dis':
+        np.random.seed(0)
+        testDisIndex = np.random.choice(3215,int(0.2*3215),replace=False) # replace=False,表示采样不重复
+        np.save("data/{}_findNew_mask".format(maskType),testDisIndex)
+        testSet = gdMatrix[:,testDisIndex]
+        gdMatrix[:,testDisIndex] = 0
+        # 构造一个字典用于对齐两次nonezero的索引
+        maskDict = {i:k for i,k in enumerate(testDisIndex)}
+
+        test_pos_index = np.where(testSet == 1) # test row index = maskGeneIndex, col index = gene index
+        test_pos_index = np.vstack((test_pos_index[0],pd.Series(test_pos_index[1]).map(maskDict).to_numpy()))
+        test_neg_index = np.where(testSet == 0)
+        test_neg_index = np.vstack((test_neg_index[0],pd.Series(test_neg_index[1]).map(maskDict).to_numpy()))
+
+    # save variables
+    sp.save_npz("data/{}_findNew_train".format(maskType),sp.csr_matrix(gdMatrix))
+    sp.save_npz("data/{}_findNew_test".format(maskType),sp.csr_matrix(testSet))
+
+    comb = sp.load_npz("data/comb.npz").toarray()
+    comb[:12331,12331:] = gdMatrix
+    edge_index_findNew = torch.tensor(comb.nonzero())
+    # 为了LUPI_RGCN做数据准备
+    sp.save_npz("data/{}_edge_index_findNew".format(maskType),sp.csr_matrix(edge_index_findNew)) 
+    np.save("data/{}_findNew_pos_index".format(maskType),test_pos_index)
+    np.save("data/{}_findNew_neg_index".format(maskType),test_neg_index)
+
+    return np.array(list(maskDict.values())), comb, testSet

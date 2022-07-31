@@ -1,7 +1,62 @@
+from itertools import combinations
 import numpy as np
 
 from utils import save_pickle, PRF1
 
+def svm(xtrain:np.array,
+       ytrain:np.array,
+       xtest:np.array,
+       ytest:np.array,
+       random_state:int, suffix='',tag=False,logInfo=False)->dict:
+    '''
+    用于单次调用机器学习模型, 主要用于kfold_model调用,
+    '''
+    from sklearn import svm
+    from sklearn.metrics import roc_curve
+    d = {'model':'SVM','suffix':'resultSVM','l':'Spport Vector Machine'}
+    model = svm.SVC(kernel='rbf',gamma='auto',C=1,probability=True).fit(xtrain, ytrain)
+    ypre = model.predict(xtest)
+    yprob = model.predict_proba(xtest)[:, 1]
+#     plot_ROC(yprob, ytest, l = d['l'],logInfo=False)
+    # prf1Dict = PRF1(np.array(ytest), ypre, yprob)
+    prf1Dict = PRF1(np.array(ytest), yprob)
+    prf1Dict['model']=d['model']
+    print('{} : AUC={:.4f}, AUPR={:.4f}'.format(prf1Dict['model'],prf1Dict['AUC'],prf1Dict['AUPR']))
+    if bool(tag): # 将自定义标签添加到prf1Dict中
+        for k,v in zip(tag.keys(),tag.values()):
+            prf1Dict[k]=v
+        if 'fold' in tag.keys() and bool(logInfo): # 如果传入fold字段, 则将保存模型的预测数据
+            dataDict = {'ytest':ytest, 'ypre':ypre, 'yprob':yprob}
+            save_pickle(variable=dataDict, suffix=suffix+'_{}_fold{}'.format(d['model'],tag['fold']),logInfo=logInfo)   
+    return prf1Dict
+
+
+def nb(xtrain:np.array,
+       ytrain:np.array,
+       xtest:np.array,
+       ytest:np.array,
+       random_state:int, suffix='',tag=False,logInfo=False)->dict:
+    '''
+    用于单次调用机器学习模型, 主要用于kfold_model调用,
+    '''
+    from sklearn.naive_bayes import GaussianNB
+    from sklearn.metrics import roc_curve
+    d = {'model':'NB','suffix':'resultNB','l':'Naive Bayes'}
+    model = GaussianNB().fit(xtrain, ytrain)
+    ypre = model.predict(xtest)
+    yprob = model.predict_proba(xtest)[:, 1]
+#     plot_ROC(yprob, ytest, l = d['l'],logInfo=False)
+    # prf1Dict = PRF1(np.array(ytest), ypre, yprob)
+    prf1Dict = PRF1(np.array(ytest), yprob)
+    prf1Dict['model']=d['model']
+    print('{} : AUC={:.4f}, AUPR={:.4f}'.format(prf1Dict['model'],prf1Dict['AUC'],prf1Dict['AUPR']))
+    if bool(tag): # 将自定义标签添加到prf1Dict中
+        for k,v in zip(tag.keys(),tag.values()):
+            prf1Dict[k]=v
+        if 'fold' in tag.keys() and bool(logInfo): # 如果传入fold字段, 则将保存模型的预测数据
+            dataDict = {'ytest':ytest, 'ypre':ypre, 'yprob':yprob}
+            save_pickle(variable=dataDict, suffix=suffix+'_{}_fold{}'.format(d['model'],tag['fold']),logInfo=logInfo) 
+    return prf1Dict
 
 def rf(xtrain:np.array,
        ytrain:np.array,
@@ -29,8 +84,7 @@ def rf(xtrain:np.array,
             prf1Dict[k]=v
         if 'fold' in tag.keys() and bool(logInfo): # 如果传入fold字段, 则将保存模型的预测数据
             dataDict = {'ytest':ytest, 'ypre':ypre, 'yprob':yprob}
-            save_pickle(variable=dataDict, suffix=suffix+'_{}_fold{}'.format(d['model'],tag['fold']),logInfo=logInfo)
-    
+            save_pickle(variable=dataDict, suffix=suffix+'_{}_fold{}'.format(d['model'],tag['fold']),logInfo=logInfo) 
     return prf1Dict
 
 def lgbm(xtrain:np.array,
@@ -125,10 +179,68 @@ def lr(xtrain:np.array,
         if 'fold' in tag.keys() and bool(logInfo): # 如果传入fold字段, 则将保存模型的预测数据
             dataDict = {'ytest':ytest, 'ypre':ypre, 'yprob':yprob}
             save_pickle(variable=dataDict, suffix=suffix+'_{}_fold{}'.format(d['model'],tag['fold']),logInfo=logInfo)
-            
-    
+        
     return prf1Dict
 
+
+def model_voting(xtrain:np.array, ytrain:np.array, xtest:np.array, ytest:np.array,
+                random_state:int=42, modelList:list=['RF','LGBM','XGB'],voting:str='soft', suffix='',tag=False,logInfo=False)->dict:
+
+    # modelList = [model+'Vote' for model in modelList] # 因为后续会用到globals()函数，防止模型名称冲突，所以需要为变量名加上Vote后缀
+    d = {'model':'_'.join(modelList),
+          'suffix':'result_'+'_'.join(modelList),
+          'l':'Voting_'+'_'.join(modelList)}
+    from sklearn.linear_model import LogisticRegression
+    lrVote = LogisticRegression(max_iter=1000, class_weight='auto')
+
+    from sklearn.naive_bayes import GaussianNB
+    nbVote = GaussianNB()
+
+    from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+    rfVote = RandomForestClassifier(n_estimators=100,
+                                class_weight='balanced',
+                                random_state=random_state)
+
+    from lightgbm import LGBMClassifier as LGBMC
+    lgbmVote = LGBMC(num_leaves=60,
+                        learning_rate=0.05,
+                        n_estimators=100,
+                        class_weight='balanced',
+                        random_state=random_state)    
+
+    from xgboost import XGBClassifier as XGBMC
+    xgbVote = XGBMC(n_estimators =150,
+                        random_state=random_state,
+                        learning_rate=0.1,
+                        booster='gbtree',
+                        objective='reg:logistic',
+                        max_depth=4,
+                        n_jobs=-1,
+                        scale_pos_weight=sum(ytrain)/len(ytrain)
+                )
+    # TODO: 应用ensemble.named_estimators_['lrVote'].predict_proba(xtest)或者predict获取模型预测结果，并将结果拼起来
+    # TODO: 应用combinations函数取modelList的组合，并将结果拼起来
+    # for model in combinations(estList,2): # 将模型列表中的模型组合成两两组合
+    estList = {'LR':('LR',lrVote),'RF':('RF',rfVote),'XGB':('XGB',xgbVote),'LGBM':('LGBM',lgbmVote),'NB':('NB',nbVote)}
+    estList = [estList.get(model) for model in modelList] # 选择模型列表中的模型
+    # print(estList)
+
+    ensembleModel = VotingClassifier(estimators=estList,voting=voting).fit(xtrain,ytrain)
+    ypre = ensembleModel.predict(xtest)
+    yprob = ensembleModel.predict_proba(xtest)[:, 1]
+
+    prf1Dict = PRF1(np.array(ytest), yprob)
+    prf1Dict['model']=d['model']
+    dataDict = {'ytest':ytest, 'yprob':yprob,'ypre':ypre}
+    print('{} : AUC={:.4f}, AUPR={:.4f}'.format(prf1Dict['model'],prf1Dict['AUC'],prf1Dict['AUPR']))
+    if bool(tag): # 将自定义标签添加到prf1Dict中
+        for k,v in zip(tag.keys(),tag.values()):
+            prf1Dict[k]=v
+            dataDict[k]=v
+        if 'fold' in tag.keys() and bool(logInfo): # 如果传入fold字段, 则将保存模型的预测数据
+            save_pickle(variable=dataDict, suffix=suffix+'_{}_fold{}'.format(d['model'],tag['fold']),logInfo=logInfo)
+    
+    return prf1Dict,dataDict,ensembleModel
 
 def muti_model(xtrain:np.array,
                 ytrain:np.array,
@@ -173,4 +285,8 @@ def muti_model(xtrain:np.array,
     prf1List.append(rf(xtrain,ytrain,xtest,ytest,tag=tag,random_state=random_state,logInfo=logInfo,suffix=suffix))
     prf1List.append(lgbm(xtrain,ytrain,xtest,ytest,tag=tag,random_state=random_state,logInfo=logInfo,suffix=suffix))
     prf1List.append(xgb(xtrain,ytrain,xtest,ytest,tag=tag,random_state=random_state,logInfo=logInfo,suffix=suffix))
+    prf1List.append(nb(xtrain,ytrain,xtest,ytest,tag=tag,random_state=random_state,logInfo=logInfo,suffix=suffix))
+    prf1List.append(lr(xtrain,ytrain,xtest,ytest,tag=tag,random_state=random_state,logInfo=logInfo,suffix=suffix))
+    prf1List.append(model_voting(xtrain,ytrain,xtest,ytest,tag=tag,random_state=random_state,logInfo=logInfo,suffix=suffix))
+    # prf1List.append(svm(xtrain,ytrain,xtest,ytest,tag=tag,random_state=random_state,logInfo=logInfo,suffix=suffix))
     return prf1List

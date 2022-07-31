@@ -4,8 +4,106 @@ python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 1 -sk True -skae True -skope
 python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 2 -sk True -skae True -skopenne True
 # log/07-08/15_
 python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 3 -sk True -skae True -skopenne True
+# log/07-08/16_
+python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 4 -sk True -skae True -skopenne True
+# log/07-08/22_
+python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 5 -sk True -skae True -skopenne True
+# log/07-09/13_
+python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 6 -sk True -skae True -skopenne True
 
 
+
+# log/07-09/16_
+python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 6 -sk True -skae True -skopenne True -om LINE
+
+# log/07-24/23_
+python src/model/main.py -ah 512 64 -id 1 -md test -fo 5 -se 0 -sk True -skae True -skopenne True -om LINE
+
+# log/07-10/13_     用于寻找最佳method 和 model 的组合
+python src/model/main.py -ah 512 64 -id 1 -fo 5 -se 6 -sk True -skae True -skopenne True -om LINE SDNE HOPE
+
+# 找到了最佳模型组合
+bash src/run.sh
+for i in {0..9}
+do 
+    python src/model/main.py -ah 512 64 -id 1 -fo 5 -se $i -sk True -skae True -skopenne True -om SDNE HOPE
+done
+
+# log/07-12/18_ 
+python src/model/main.py -ah 512 64 -id 1 -md findNew -fo 5 -se 0 -sk True -skae True -skopenne True -om SDNE HOPE
+
+####### ratio ML ########
+# log/07-12/18_ > ML
+for i in {0..9}
+do 
+    python src/model/main.py -ah 512 64 -id 1 -md train -fo 5 -se 0 -sk True -skae True -skopenne True -om SDNE HOPE
+done
+
+
+
+################ findNew ######### 
+# log/07-16/15_  dis findNew
+python src/model/main.py -ah 512 64 -id 1 -md findNew -fo 5 -se 0 -sk True -skae True -skopenne True -om SDNE HOPE -maskType dis
+# log/07-16/0_  gene findNew
+python src/model/main.py -ah 512 64 -id 1 -md findNew -fo 5 -se 0 -sk True -skae True -skopenne True -om SDNE HOPE -maskType gene
+
+# log/07-21/15_  dis findNew
+for i in {0..9}
+do 
+    python src/model/main.py -ah 512 64 -id 1 -md findNew -fo 5 -se $i -sk True -skae True -skopenne True -om SDNE HOPE -maskType dis -savePath uk_gd
+done
+
+# log/07-22/16_  gene findNew
+for i in {0..9}
+do 
+    python src/model/main.py -ah 512 64 -id 1 -md findNew -fo 5 -se $i -sk True -skae True -skopenne True -om SDNE HOPE -maskType gene -savePath uk_gd
+done
+
+
+
+################ LUPI_RGCN #######
+# log/07-22/0_ 
+python baseline/LUPI_RGCN/LUPI_RGCN_wzy.py -se 0 -md findNew -maskType gene
+
+# log/07-22/18_ 
+for i in {0..9}
+do
+    python baseline/LUPI_RGCN/LUPI_RGCN_wzy.py -se $i -md findNew -maskType gene -savePath uk_gd
+done
+# log/07-22/18_ 
+for i in {0..9}
+do
+    python baseline/LUPI_RGCN/LUPI_RGCN_wzy.py -se $i -md findNew -maskType dis -savePath uk_gd
+done
 
 python -m openne --model ${model} --local-dataset --root-dir  OpenNE/GeneDis --adjfile adj.adjlist --labelfile labels.txt --dim 64
 conda run -n openne -m openne --model deepwalk --local-dataset --root-dir  OpenNE/GeneDis --adjfile adj.adjlist --labelfile labels.txt --dim 64
+
+
+#===============ablation study==============
+# log/07-25/0_
+python src/model/main_analysis.py -ah 512 64 -id 1 -md ablation -fo 5 -se 0 -sk True -skae True -skopenne True -om SDNE HOPE -ablationType ae
+python src/model/main_analysis.py -ah 512 64 -id 1 -md ablation -fo 5 -se 0 -sk True -skae True -skopenne True -om SDNE HOPE -ablationType openne
+
+#===============case study==================
+# log/07-25/15_
+python src/model/main_analysis.py -ah 512 64 -id 1 -md caseStudy -fo 5 -se 0 -sk True -skae True -skopenne True -om SDNE HOPE 
+
+#=============== sen =======================
+# log/07-26/13_
+python src/model/main_analysis.py -id 1 -md sen -fo 5 -se 0 -sk True -skopenne True -om SDNE HOPE -savePath sen -ah 512 64 -skae True -openneDim 32
+# log/07-26/13_
+python src/model/main_analysis.py -id 1 -md sen -fo 5 -se 0 -sk True -skopenne True -om SDNE HOPE -savePath sen -ah 512 64 -skae True -openneDim 64
+# log/07-26/13_
+python src/model/main_analysis.py -id 1 -md sen -fo 5 -se 0 -sk True -skopenne True -om SDNE HOPE -savePath sen -ah 512 64 -skae True -openneDim 128
+# log/07-26/14_
+python src/model/main_analysis.py -id 1 -md sen -fo 5 -se 0 -sk True -skopenne True -om SDNE HOPE -savePath sen -ah 512 64 -skae True -openneDim 256
+
+#log/07-26/14_
+python src/model/main_analysis.py -id 0 -md sen -fo 5 -se 0 -sk True -skopenne True -om SDNE HOPE -savePath sen -ah 512 32 -openneDim 128
+#log/07-26/14_
+python src/model/main_analysis.py -id 1 -md sen -fo 5 -se 0 -sk True -skopenne True -om SDNE HOPE -savePath sen -ah 512 64 -openneDim 128
+#log/07-26/14_
+python src/model/main_analysis.py -id 2 -md sen -fo 5 -se 0 -sk True -skopenne True -om SDNE HOPE -savePath sen -ah 512 128 -openneDim 128
+#log/07-26/14_
+python src/model/main_analysis.py -id 3 -md sen -fo 5 -se 0 -sk True -skopenne True -om SDNE HOPE -savePath sen -ah 512 256 --openneDim 128

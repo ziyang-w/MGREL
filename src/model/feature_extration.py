@@ -100,23 +100,23 @@ def gdFeatureByAE(dis_feat,gene_feat,logInfo = args.logInfo, device=args.device)
     disTrainInfo['loss'] = list(map(lambda x:float(x.detach()),disTrainInfo['loss']))
     disTrainInfoDF = pd.DataFrame(disTrainInfo)
     torch.save(disAETrain,os.path.join(logInfo['logPath'],logInfo['hour']+'disAE.model'))
-    save_csv(disTrainInfoDF,logInfo,'disTrainLoss')
+    save_csv(disTrainInfoDF,logInfo,'disTrainLoss_{}'.format(str(args.ae_hidden)))
    
     # training gene AE and save model and loss
     geneAETrain,geneTrainInfo = train(model=geneAE,ds=geneFeat)
     geneTrainInfo['loss'] = list(map(lambda x:float(x.detach()),geneTrainInfo['loss']))
     geneTrainInfoDF = pd.DataFrame(geneTrainInfo)
     torch.save(geneAETrain,os.path.join(logInfo['logPath'],logInfo['hour']+'geneAE.model'))
-    save_csv(geneTrainInfoDF,logInfo,'geneTrainLoss')
+    save_csv(geneTrainInfoDF,logInfo,'geneTrainLoss_{}'.format(str(args.ae_hidden)))
 
     # using AE to decompose feature
     dis_feat_refine = disAETrain.encode(torch.tensor(dis_feat.todense(),dtype=torch.float32,device=device)).cpu()
     gene_feat_refine = geneAETrain.encode(torch.tensor(gene_feat.todense(),dtype=torch.float32,device=device)).cpu()
 
     gdFeature = torch.vstack((gene_feat_refine,dis_feat_refine))
-    torch.save(gdFeature,os.path.join(logInfo['logPath'],logInfo['hour']+'1_geneDisFeature.tensor'))
+    # torch.save(gdFeature,os.path.join(logInfo['logPath'],logInfo['hour']+'1_geneDisFeature.tensor'))
     # 生成一份临时文件，用于args.skip_ae=True时跳过AE的训练过程
-    torch.save(gdFeature,'log/geneDisFeatureByAE.tensor') 
+    torch.save(gdFeature,'log/geneDisFeatureByAE_{}.tensor'.format(str(args.ae_hidden)))
     
     return gdFeature
 
@@ -139,8 +139,8 @@ def featureByOpenNE(opennePath,logInfo = args.logInfo):
     mask=np.ones_like(strucFeature,dtype=bool)
     mask[:,0]=0 
     strucFeature = strucFeature.sort(dim=0).values[mask].reshape(i,numFeature) #(15546,128)
-    embModel = opennePath.split('/')[-2] # 获取DeepWalk
-    torch.save(strucFeature,os.path.join(logInfo['logPath'],logInfo['hour']+'2_embeddingFeaure_{}.tensor'.format(embModel)))
+    # embModel = opennePath.split('/')[-2] # 获取DeepWalk
+    # torch.save(strucFeature,os.path.join(logInfo['logPath'],logInfo['hour']+'2_embeddingFeaure_{}.tensor'.format(embModel)))
     return strucFeature
 
 # 暂时用不到这个函数

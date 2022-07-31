@@ -14,8 +14,8 @@ parser.add_argument('-skae', '--skip_ae', default=False, type=bool,
                     help='if True, skip AutoEncoder.')
 # parser.add_argument('-da', '--dataset', type=str,
 #                     help='Set the data set for training.')
-parser.add_argument('-sp', '--saved_path', type=str,
-                    help='Path to save training results', default='result')
+parser.add_argument('-savePath', '--saved_path', type=str,
+                    help='Path to save training results', default='')
 parser.add_argument('-se', '--seed', default=42, type=int,
                     help='Global random seed')
 # Training Arguments
@@ -33,21 +33,30 @@ parser.add_argument('-bs', '--batch_size', default=512, type=int,
 #                     help='Early Stopping argument')
 
 # Model Arguments
-#TODO: Add more arguments for model
 parser.add_argument('-ah', '--ae_hidden', nargs='+', type=int, 
                     help='Set the AutoEncoder hidden layer. eg: 512 64')
-                
-# parser.add_argument('-hf', '--hidden_feats', default=64, type=int,
-#                     help='The dimension of hidden tensor in the model')
-# parser.add_argument('-he', '--num_heads', default=5, type=int,
-#                     help='Number of attention heads the model has')
-# parser.add_argument('-dp', '--dropout', default=0.0, type=float,
-#                     help='The rate of dropout layer')
+parser.add_argument('-om', '--openne_method', nargs='+', type=str, default='LINE HOPE SNDE',
+                    help='Set the AutoEncoder hidden layer. eg: LINE HOPE SNDE')
+ 
+# analysis Arguments
+parser.add_argument('-md', '--mode', type=str,
+                    help='running mode of main. mode: train | findNew', default='train')      
+parser.add_argument('-maskType', '--maskType', type=str,
+                    help='running mode of main. mode: gene | dis', default='gene')  
+parser.add_argument('-ablationType', '--ablationType', type=str,
+                    help='running mode of main. mode: ae | openne') 
+parser.add_argument('-openneDim', '--openneDim', type=str,
+                    help='running mode of main. mode: ae | openne') 
+
 
 args = parser.parse_args()
 
-args.logInfo = make_logInfo(fileName='', filePath = os.getcwd())
-args.saved_path = args.saved_path + '_' + str(args.seed)
+args.logInfo = make_logInfo(fileName='', filePath = os.getcwd(),savePath=args.saved_path)
+# 用于方便后续保存文件更清晰，以随机种子命名和保存文件
+# args.logInfo['hour'] = str(args.seed)+'_'
+# args.logInfo['date'] = args.saved_path # 将文件保存在log/save_path目录下
+
+# args.saved_path = args.saved_path + '_' + str(args.seed)
 args.device = 'cuda:{}'.format(args.device_id) if torch.cuda.is_available() else 'cpu'
 
 # save args in to file txt
@@ -55,4 +64,4 @@ with open(os.path.join(args.logInfo['logPath'], '{}args.txt'.format(args.logInfo
     f.write(str(args))
 print(args)
 
-
+# TODO: 将买一次运行的结果，每一折的结果处理保存成一个csv文件

@@ -1,7 +1,6 @@
 # python缓存文件都默认忽略
 *.pyc
 # data会在论文发表后上传到github
-# data/*
 data/caseStudy/*
 data/LUPI_RGCN_PYG*/*
 data/clinicalfeatures_tfidf.mat
@@ -11,16 +10,6 @@ data/edge_index.npy
 data/feature_matrix.npy
 data/label.npy
 data/LUPI_RGCN_PYG/*
-result_LUPI_RGCN/*
-# 由代码自动生成的数据可以不用上传
-log/*
-OpenNE/GeneDis/*
-OpenNE/results/*
-OpenNE/results*/*
-result/*
-
-README_finish.md
-
 data/comb_findNew.npz
 data/dis_edge_index_findNew.npz
 data/dis_feat.npz
@@ -36,3 +25,16 @@ data/gene_findNew_neg_index.npy
 data/gene_findNew_pos_index.npy
 data/gene_findNew_test.npz
 data/gene_findNew_train.npz
+
+src/result_analysis.ipynb
+
+README_final.md
+# 由代码自动生成的数据可以不用上传
+log/*
+OpenNE/GeneDis/*
+OpenNE/results/*
+OpenNE/results*/*
+result/*
+result_LUPI_RGCN/*
+# 流程图稍后上传
+assert/*

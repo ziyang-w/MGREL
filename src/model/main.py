@@ -12,7 +12,7 @@ from utils import set_seed, save_csv,PRF1,save_pickle
 from feature_extration import gdFeatureByAE, featureByOpenNE,sampling_from_numpy
 
 
-def main():
+def train():
     randomState = set_seed(args.seed)
 
     '''
@@ -260,8 +260,8 @@ def findNew():
     macrioPRF1List.append(macroPRF1)
 
     save_csv(pd.DataFrame({'YTEST':YTEST,'YPROB':YPROB}),logInfo,'ML_prediction_{}_{}'.format(args.mode,args.maskType))
-    # save_csv(pd.DataFrame(macrioPRF1List),logInfo,'result_macro_'.format(ms))
-    # save_csv(pd.DataFrame(prf1List),logInfo,'result_'+ms)
+    save_csv(pd.DataFrame(macrioPRF1List),logInfo,'result_macro_'.format(ms))
+    save_csv(pd.DataFrame(prf1List),logInfo,'result_'+ms)
 
 def findBest():
     randomState = set_seed(args.seed)
@@ -450,23 +450,13 @@ def test():
             prf1Dict,dataDict,ensembleModel = ml.model_voting(xtrain,ytrain,xtest,ytest,tag={'fold':fold},random_state=randomState,
                                         logInfo=logInfo,suffix=ms,modelList=[model])
             prf1List.append(prf1Dict)
-
-
-        # if fold==1:
-        #     YTEST = dataDict['ytest']
-        #     YPROB = dataDict['yprob']
-        # else:
-        #     YTEST = np.concatenate((YTEST,dataDict['ytest']))
-        #     YPROB = np.concatenate((YPROB,dataDict['yprob']))
-
         fold+=1
-    # save_csv(pd.DataFrame({'YTEST':YTEST,'YPROB':YPROB}),logInfo,'Find_ML_models_{}'.format(args.seed))
     save_csv(pd.DataFrame(prf1List),logInfo,'Find_ML_PRF1_{}'.format(args.seed))
 
 if __name__=='__main__':
     print('========={}========{}========{}========'.format(args.mode,args.mode,args.mode))
     if args.mode=='train':
-        main()
+        train()
     elif args.mode=='findBest':
         findBest()
     elif args.mode=='findNew':

@@ -22,6 +22,7 @@ We adopted and reorganized a gene-disease association benchmark dataset as widel
 | Gene  features    | gene-phenotype association | -     | -      | 12944      |
 | Disease  features | DO similarity              | -     | -      | 16592      |
 | Disease  features | TF-IDF of OMIM text        | -     | -      | 16592      |
+
 *The sum dementions of DO similarity, TF-IDF of OMIM text is 16592*
 
 

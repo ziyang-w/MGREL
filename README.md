@@ -4,7 +4,7 @@ this repository store the code for paper **MGREL: A multi-graph representation l
 
 we first re-organized the current gene-disease association prediction benchmark by extracting the latest gene-disease associations from the OMIM database. Then, we developed a multi-graph representation learning-based ensemble model, named MGREL to predict potential gene-disease associations. MGREL integrated two channels to extract gene and disease features, including knowledge extraction channel and graph learning channel. Then ensemble machine learning methods were used as the classifier to predict the association. The workflow of MGREL model was shown in Figure.
 
-![](./assert/workflow.png)
+![workflow](https://github.com/ziyang-W/GDML/assert/workflow.png)
 
 
 # Data

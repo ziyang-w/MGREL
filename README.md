@@ -55,18 +55,14 @@ python src/model/main.py -ah 512 64 -id 1 -md train -fo 5 -se 0 -om SDNE HOPE
 ```
 
 
-# License
-[1] MGREL: A multi-graph representation learning-based ensemble learning method for gene-disease association prediction
+# Reference
+
+If you are interested in our work, please see details in this artical and cite it. Thanks!
+
+[MGREL: A multi-graph representation learning-based ensemble learning method for gene-disease association prediction](https://doi.org/10.1016/j.compbiomed.2023.106642)
 
 
 # Acknowledgement
 To succeed in MGREL model is
 This project could not be developed without the support of **collaborators [gu-yaowen](https://github.com/gu-yaowen)**
 We also thank the open source OMIM database, the NCBI database and OpenNE repository.
-
-
-
-
-
-
-
